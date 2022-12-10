@@ -36,15 +36,24 @@ function getMostCommonGenres(books) {
 }
 
 
+//helper function to support getMostPopularBooks function
+function getTop5(array) {
+  array.sort((itemA, itemB) => itemB.count - itemA.count);
+  return array.slice(0,5);
+}
+
+
+
 //return an array containing five objects or fewer that represents the most popular books in the library. 
 function getMostPopularBooks(books) {
-  return books.map(book => {
-    return {
-      //Each object in the returned array has two keys: name, count
-      name: book.title,
-      count: book.borrows.length
-    }
-  }).sort((bookA, bookB) => bookB.count - bookA.count).slice(0,5)
+  let popularBooks = [];
+  books.forEach(({title, borrows}) => {
+    popularBooks.push({
+      "name" : title,
+      "count" : borrows.length
+    });
+  });
+  return getTop5(popularBooks);
 }
 
 
